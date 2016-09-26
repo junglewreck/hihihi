@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>a lot of kanye</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <style>
+            html, body {
+                width: 100%;
+                height: 100%;
+            }
+ 
+            body {
+                background-color: #ffffff;
+                margin: 0;
+                overflow: hidden;
+                font-family: arial;
+            }
+ 
+            #info {
+                text-align: center;
+                padding: 5px;
+                position: absolute;
+                width: 100%;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+ 
+        <div id="info"><a href="http://hihihi.lol" target="_blank">hihihi</a> 500000 Gods</div>
+ 
+        <script src="three.js"></script>
+        <script src="TypedArrayUtils.js"></script>
+        <script src="FirstPersonControls.js"></script>
+        <script src="stats.min.js"></script>
+        <script type="x-shader/x-vertex" id="vertexshader">
+ 
+            //uniform float zoom;
+ 
+            attribute float alpha;
+ 
+            varying float vAlpha;
+ 
+            void main() {
+ 
+                vAlpha = 1.0 - alpha;
+ 
+                vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+ 
+                gl_PointSize = 4.0 * ( 300.0 / -mvPosition.z );
+ 
+                gl_Position = projectionMatrix * mvPosition;
+ 
+            }
+ 
+        </script>
+ 
+        <script type="x-shader/x-fragment" id="fragmentshader">
+ 
+            uniform sampler2D tex1;
+ 
+            varying float vAlpha;
+ 
+            void main() {
+ 
+                gl_FragColor = texture2D(tex1, gl_PointCoord);
+                gl_FragColor.r = (1.0 - gl_FragColor.r) * vAlpha + gl_FragColor.r;
+ 
+            }
+ 
+        </script>
+        <script src="world.js"></script>
+
+    </body>
+</html>
